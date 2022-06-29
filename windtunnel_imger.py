@@ -4,11 +4,14 @@ from picamera import PiCamera
 from time import sleep
 from datetime import datetime, timedelta
 import os
+import sys
 ## have this script be something that is user friendly... let's try to convert this to a class later on...
 ## so then this can be later utilized as a function and imported to make things easier
 
 # called PiCamera
 camera = PiCamera()
+## FOR THE PIBEECAM
+# camera.rotation = 270
 
 # defined function for UI printing:
 def print_stats():
@@ -68,11 +71,11 @@ while user_input in range(1,5): # going from 1 to 4
                 # location where file will be saved was updated.
                 location = path_new + "/%s.jpg"
                 # Current time for the file
-                time_current = datetime.now().strftime("%H:%M:%S")
+                time_current = datetime.now().strftime("%Y%m%d%H%M%S.%f")
                 # filename was generated
                 filename = location % time_current
                 # preview the images...
-                camera.start_preview()
+                #camera.start_preview()
                 
                 
                 # Image was saved to file location
@@ -80,7 +83,7 @@ while user_input in range(1,5): # going from 1 to 4
                 
                 sleep(delay_time)
                 # end the preview
-                camera.stop_preview()
+                #camera.stop_preview()
                 
                 
                 #pathname = '/home/pi/Desktop/images/windtunnel_images/'+str(capture)+'.jpg'
@@ -154,12 +157,32 @@ while user_input in range(1,5): # going from 1 to 4
             user_input = int(input())
     # this condition is if user would like to view the images...
     elif user_input == 3:
-        # calibrate the camera.. sets a camera preview with a command to only stop the preview after the user presses a key
-        # make sure the user knows that the following only works when GUI is activated on the Pi
-        print("You are requesting to look at the images taken, make sure GUI is enabled in order to do so, proceed (y/n)")
-        img3_input = input()
+        path = "/home/pi/Desktop/images/windtunnel_images/Video/"
+        location = path + "/%s.h264"
+        print("Would you like to start a 10 second video (y/n")
+        vidinput = input()
+        if vidinput == 'y':
+            sleep(2)
+            current_time = datetime.now()
+            time_current_split = str(time_current.strftime("%Y%m%d%H%M%S.%f"))
+            filename=location % time_current_split
+            print("Start Recording...")
+            camera.start_preview()
+            camera.wait_recording(10)
+            camera.stop_recording()
+            camera.stop_preview()
+            print("End of Recording")
+        else:
+            print_stats()
+            user_input = int(input())
+    # calibrate the camera.. sets a camera preview with a command to only stop the preview after the user presses a key
+    # make sure the user knows that the following only works when GUI is activated on the Pi
+    #print("You are requesting to look at the images taken, make sure GUI is enabled in order to do so, proceed (y/n)")
+    #img3_input = input()
         # add the rest of it...
 
-# last option is to quit the program
-if user_input == 4:
-    quit() #this will quit the program
+    # last option is to quit the program
+    elif user_input == 4:
+        break
+# Quit the program...    
+quit() 
