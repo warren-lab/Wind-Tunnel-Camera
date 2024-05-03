@@ -63,7 +63,7 @@ camera.configure(cam_config)
 camera.exposure_mode = 'sports'
 camera.set_controls({"AeEnable": False, "AwbEnable": False, "FrameRate": 1.0, "LensPosition": lens_position})
 camera.start()
-sleep(5)
+sleep(8)
 print(datetime.now().strftime("%y%m%d_%H%M"))
 # print(print_stats())
 # user_input = int(input())
@@ -93,7 +93,7 @@ elif sys.argv[1] == "-r":
     start_time = current_time
     start_time_new = datetime.strptime(start_time ,"%y%m%d_%H%M")
     # set the folder for the timelapse
-    timelapse_folder = exp_name+str(start_time)
+    timelapse_folder = str(start_time)+'_'+exp_name
     path_new = os.path.join(path_timelapse,timelapse_folder)
     os.makedirs(path_new, exist_ok = True)
     
@@ -110,6 +110,7 @@ elif sys.argv[1] == "-r":
         time_current_split = str(time_current.strftime("%H-%M-%S"))
         r.save("main","test_"+time_current_split+'.jpg')
         r.release()
+    sleep(10)
     print(len(os.listdir()))
         # sleep(.5)
             # 
