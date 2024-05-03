@@ -51,7 +51,7 @@ camera = Picamera2()
 cam_config = camera.create_still_configuration({'size': size})
 camera.configure(cam_config)
 camera.exposure_mode = 'sports'
-camera.set_controls({"LensPosition": lens_position})
+camera.set_controls({"AeEnable": False, "AwbEnable": False, "FrameRate": 1.0, "LensPosition": lens_position})
 camera.start()
 sleep(5)
 
@@ -99,8 +99,10 @@ elif sys.argv[1] == "-r":
         count = 0
         while datetime.now() <= time_end:
             time_current = datetime.now()
+            r=camera.capture_request()
             time_current_split = str(time_current.strftime("%Y%m%d_%H%M%S"))
-            camera.capture_file('Pi1_'+time_current_split+'.jpg')
+            r.save('Pi1_'+time_current_split+'.jpg')
+            r.release()
             count+=1
             sleep(.5)
         print(count)
