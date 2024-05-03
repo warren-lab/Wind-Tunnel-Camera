@@ -101,7 +101,7 @@ elif sys.argv[1] == "-r":
             time_current = datetime.now()
             r=camera.capture_request()
             time_current_split = str(time_current.strftime("%Y%m%d_%H%M%S"))
-            r.save('Pi1_'+time_current_split+'.jpg')
+            r.save("main",'Pi1_'+time_current_split+'.jpg')
             r.release()
             count+=1
             sleep(.5)
