@@ -104,16 +104,14 @@ elif sys.argv[1] == "-r":
     time_end = (start_time_new + dur2_delta)
     print(time_end.strftime("%Y%m%d%H%M%S"))
     # start = perf_counter()
-    count = 0
     while datetime.now() <= time_end:
         time_current = datetime.now()
         r=camera.capture_request()
         time_current_split = str(time_current.strftime("%H%M%S"))
         r.save("main",exp_name +time_current_split+'.jpg')
         r.release()
-        count+=1
+    print(len(os.listdir()))
         # sleep(.5)
-    print(count)
             # 
         # end=perf_counter()
         # frmerte = count/(end-start)
