@@ -49,10 +49,13 @@ print_stats()
 # Set the Experiment Duration
 # Duration of the Experiment:
 print("\nInput Duration of Experiment")
-dur_input = input("HH:MM(24-Hr) ")
+dur_input = input("HH:MM(24-Hr): ")
 duration = dur_input.split(":")
 dur_delta = [int(duration[0]),int(duration[1])]
 dur2_delta = timedelta(minutes = int(duration[1]), hours = int(duration[0]))
+
+print("\nWhat is the Name of the Experiment?")
+exp_name = input("enter here:")
 
 camera = Picamera2()
 cam_config = camera.create_still_configuration({'size': size})
@@ -85,7 +88,7 @@ if sys.argv[1] == "-t":
 
 elif sys.argv[1] == "-r":
     # set the start time
-    current_time = datetime.now().strftime("%Y%m%d%H%M%S")
+    current_time = datetime.now().strftime("%y%m%d_%H%M")
     print(current_time)
     start_time = current_time
     start_time_new = datetime.strptime(start_time ,"%Y%m%d%H%M%S")
@@ -105,8 +108,8 @@ elif sys.argv[1] == "-r":
     while datetime.now() <= time_end:
         time_current = datetime.now()
         r=camera.capture_request()
-        time_current_split = str(time_current.strftime("%Y%m%d_%H%M%S"))
-        r.save("main",'Pi1_'+time_current_split+'.jpg')
+        time_current_split = str(time_current.strftime("%H%M%S"))
+        r.save("main",exp_name +time_current_split+'.jpg')
         r.release()
         count+=1
         # sleep(.5)
