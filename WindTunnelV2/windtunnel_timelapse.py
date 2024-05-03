@@ -111,6 +111,8 @@ elif sys.argv[1] == "-r":
         time_current_split = str(time_current.strftime("%H-%M-%S"))
         r.save("main","test_"+time_current_split+'.jpg')
         r.release()
+        sleep(1)
+
     sleep(10)
     print(len(os.listdir()))
         # sleep(.5)
