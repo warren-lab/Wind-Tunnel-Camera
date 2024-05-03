@@ -52,7 +52,7 @@ cam_config = camera.create_still_configuration({'size': size})
 camera.configure(cam_config)
 camera.exposure_mode = 'sports'
 camera.set_controls({"LensPosition": lens_position})
-camera.start()
+camera.start(show_preview=True)
 sleep(5)
 
 # print(print_stats())
@@ -65,15 +65,13 @@ if sys.argv[1] == "-t":
         time_current = datetime.now().strftime("%Y%m%d%_H%M%S")
         # filename was generated
         filename = location % time_current
-        # preview the images...
-        camera.start_preview()
+
             
         # Image was saved to file location
         camera.capture_file(filename)
                         
         sleep(delay_time)
-        # end the preview
-        camera.stop_preview()
+
     except KeyboardInterrupt:
         print("Interrupt")
   #   #   #   #   
