@@ -98,6 +98,7 @@ elif sys.argv[1] == "-r":
     os.makedirs(path_new, exist_ok = True)
     
     # Change working directory to save image files:
+    print(path_new)
     os.chdir(path_new)
 
     # added the the time delta to the before time to get the ending time
