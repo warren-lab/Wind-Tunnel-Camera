@@ -93,7 +93,7 @@ elif sys.argv[1] == "-r":
     start_time = current_time
     start_time_new = datetime.strptime(start_time ,"%y%m%d_%H%M")
     # set the folder for the timelapse
-    timelapse_folder = "Pi1_"+str(start_time)
+    timelapse_folder = exp_name+str(start_time)
     path_new = os.path.join(path_timelapse,timelapse_folder)
     os.makedirs(path_new, exist_ok = True)
     
@@ -107,8 +107,8 @@ elif sys.argv[1] == "-r":
     while datetime.now() <= time_end:
         time_current = datetime.now()
         r=camera.capture_request()
-        time_current_split = str(time_current.strftime("%H%M%S"))
-        r.save("main",exp_name +"_"+time_current_split+'.jpg')
+        time_current_split = str(time_current.strftime("%H-%M-%S"))
+        r.save("main","test_"+time_current_split+'.jpg')
         r.release()
     print(len(os.listdir()))
         # sleep(.5)
