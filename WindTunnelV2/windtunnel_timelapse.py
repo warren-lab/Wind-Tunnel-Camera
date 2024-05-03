@@ -52,7 +52,7 @@ cam_config = camera.create_still_configuration({'size': size})
 camera.configure(cam_config)
 camera.exposure_mode = 'sports'
 camera.set_controls({"LensPosition": lens_position})
-camera.start(show_preview=True)
+camera.start()
 sleep(5)
 
 # print(print_stats())
@@ -90,7 +90,7 @@ elif sys.argv[1] == "-r":
         os.makedirs(path_new, exist_ok = True)
         
         # Change working directory to save image files:
-        os.chir(path_new)
+        os.chdir(path_new)
 
         # added the the time delta to the before time to get the ending time
         time_end = (start_time_new + tdelta)
