@@ -40,7 +40,7 @@ os.makedirs(timelapse_dat, exist_ok = True)
 time_end = datetime.now() + timedelta(minutes =1)
 while datetime.now() <= time_end:
     r = picam2.capture_request()
-    r.save("main", timelapse_dat+"test_"+datetime.now().strftime("%H-%M-%S")+'.jpg')
+    r.save("main", timelapse_dat+"/test_"+datetime.now().strftime("%H-%M-%S")+'.jpg')
     r.release()
     # print(f"Captured image {i} of 50 at {time.time() - start_time:.2f}s")
 
