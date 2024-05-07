@@ -61,7 +61,7 @@ camera = Picamera2()
 cam_config = camera.create_still_configuration({'size': size})
 camera.configure(cam_config)
 camera.exposure_mode = 'sports'
-camera.set_controls({"AeEnable": False, "AwbEnable": False, "FrameRate": 1.0, "LensPosition": lens_position})
+camera.set_controls({"LensPosition": lens_position})
 camera.start()
 sleep(8)
 print(datetime.now().strftime("%y%m%d_%H%M"))
