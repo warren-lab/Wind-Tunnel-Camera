@@ -16,7 +16,7 @@ picam2.start()
 # Give time for Aec and Awb to settle, before disabling them
 time.sleep(1)
 
-picam2.set_controls({"AeEnable": False, "AwbEnable": False, "FrameRate": 2.0})
+picam2.set_controls({"AeEnable": False, "AwbEnable": False, "FrameRate": .5})
 # And wait for those settings to take effect
 time.sleep(1)
 
