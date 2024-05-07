@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import time
-from datetime import datetime
+from datetime import datetime,timedelta
 
 from picamera2 import Picamera2
 size = (2304,1296)
@@ -21,11 +21,13 @@ picam2.set_controls({"AeEnable": False, "AwbEnable": False, "FrameRate": 1.0})
 time.sleep(1)
 
 start_time = time.time()
-for i in range(1, 61):
+# for i in range(1, 61):
+time_end = datetime.now() + timedelta(minutes =1)
+while datetime.now() <= time_end:
     r = picam2.capture_request()
     r.save("main", "test_"+datetime.now().strftime("%H-%M-%S")+'.jpg')
     r.release()
-    print(f"Captured image {i} of 50 at {time.time() - start_time:.2f}s")
+    # print(f"Captured image {i} of 50 at {time.time() - start_time:.2f}s")
 
 
 picam2.stop()
