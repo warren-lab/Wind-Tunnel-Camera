@@ -6,7 +6,7 @@ import logging
 import yaml
 from picamera2 import Picamera2
 from time import sleep
-from datetime import datetime
+from datetime import datetime,timedelta
 size = (2304,1296)
 lens_position = 4.0
 name = 'bob'
@@ -28,8 +28,9 @@ os.makedirs(time_path, exist_ok=True)
 os.chdir(time_path)
 print('Imaging')
 logging.info("Imaging...")
+time_end = datetime.now()+timedelta(minutes = 1)
 
-while True:
+while datetime.now() <= time_end:
     time_current = datetime.now()
     time_current_split = str(time_current.strftime("%Y%m%d_%H%M%S"))
     try:
