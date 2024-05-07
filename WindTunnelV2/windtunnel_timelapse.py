@@ -104,14 +104,16 @@ elif sys.argv[1] == "-r":
     # added the the time delta to the before time to get the ending time
     time_end = (start_time_new + dur2_delta)
     print(time_end.strftime("%y%m%d_%H%M"))
-    # start = perf_counter()
+    
     while datetime.now() <= time_end:
+        start = perf_counter()
         time_current = datetime.now()
         r=camera.capture_request()
         time_current_split = str(time_current.strftime("%H-%M-%S"))
         r.save("main","test_"+time_current_split+'.jpg')
         r.release()
-        sleep(1)
+        end = perf_counter()
+        sleep(1-(end-start))
 
     sleep(10)
     print(len(os.listdir()))
