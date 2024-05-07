@@ -20,7 +20,7 @@ picam2.set_controls({"AeEnable": False, "AwbEnable": False, "FrameRate": 1.0})
 time.sleep(1)
 
 start_time = time.time()
-for i in range(1, 51):
+for i in range(1, 61):
     r = picam2.capture_request()
     r.save("main", f"image{i}.jpg")
     r.release()
