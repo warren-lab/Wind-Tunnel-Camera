@@ -107,9 +107,9 @@ elif sys.argv[1] == "-r":
     
     while datetime.now() <= time_end:
         start = perf_counter()
-        r=camera.capture_request()
-        r.save("main","test_"+str(datetime.now().strftime("%H-%M-%S"))+'.jpg')
-        r.release()
+        # r=camera.capture_request()
+        camera.capture_file("test_"+datetime.now().strftime("%H-%M-%S")+'.jpg')
+        # r.release()
         end = perf_counter()
         sleep(max(0,1- (end-start)))
     sleep(10)
