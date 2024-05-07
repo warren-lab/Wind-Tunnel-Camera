@@ -107,15 +107,14 @@ elif sys.argv[1] == "-r":
     
     while datetime.now() <= time_end:
         start = perf_counter()
-        time_current = datetime.now()
         r=camera.capture_request()
-        time_current_split = str(time_current.strftime("%H-%M-%S"))
-        r.save("main","test_"+time_current_split+'.jpg')
+        r.save("main","test_"+str(datetime.now().strftime("%H-%M-%S"))+'.jpg')
         r.release()
         end = perf_counter()
+        print(start, end,1-(end-start))
         sleep(1-(end-start))
-
     sleep(10)
+    camera.stop()
     print(len(os.listdir()))
         # sleep(.5)
             # 
