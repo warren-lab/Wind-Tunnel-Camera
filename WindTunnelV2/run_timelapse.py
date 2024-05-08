@@ -57,7 +57,7 @@ picam2.exposure_mode = 'sports'
 prev_config = picam2.create_preview_configuration()
 picam2.configure(prev_config)
 picam2.set_controls({"LensPosition": lens_position})
-picam2.start(show_preview = True)
+picam2.start()
 
 # Give time for Aec and Awb to settle, before disabling them
 time.sleep(1)
@@ -81,5 +81,5 @@ while datetime.now() < time_end:
     count +=1
     # print(f"Captured image {i} of 50 at {time.time() - start_time:.2f}s")
 
-picam2.stop_preview()
+# picam2.stop_preview()
 picam2.stop()
