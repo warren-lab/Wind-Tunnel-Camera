@@ -21,8 +21,8 @@ def print_stats():
     =========================================
     ''')
 
-size = (1920,1080)
-# size = (4608,2592)
+# size = (1920,1080)
+size = (4608,2592)
 # (2304,1296) # 1 fps
 lens_position = 5.3
 # 4.0 # fps
@@ -51,9 +51,11 @@ exp_name = input("enter here:")
 picam2 = Picamera2()
 # prev_config = picam2.create_preview_configuration()
 # picam2.configure(prev_config)
-cam_config = picam2.create_still_configuration({'size': size})
+# cam_config = picam2.create_still_configuration({'size': size})
 picam2.exposure_mode = 'sports'
-picam2.configure(cam_config)
+# picam2.configure(cam_config)
+prev_config = picam2.picam2.create_preview_configuration()
+picam2.configure(prev_config)
 picam2.set_controls({"LensPosition": lens_position})
 picam2.start(show_preview = True)
 
