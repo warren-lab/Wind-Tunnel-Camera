@@ -48,7 +48,7 @@ exp_name = input("enter here:")
 
 
 picam2 = Picamera2()
-prev_config = picam2.picam2.create_preview_configuration()
+prev_config = picam2.create_preview_configuration()
 picam2.configure(prev_config)
 cam_config = picam2.create_still_configuration({'size': size})
 picam2.exposure_mode = 'sports'
