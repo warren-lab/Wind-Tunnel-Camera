@@ -21,8 +21,10 @@ def print_stats():
     =========================================
     ''')
 
-size = (2304,1296)
-lens_position = 4.0
+size = (4608,2592)
+# (2304,1296) # 1 fps
+lens_position = 5.3
+# 4.0 # fps
 
 # the path for saving the folders
 path_test = "/home/pi/swd_imgs/test/"
@@ -66,10 +68,12 @@ timelapse_dat = os.path.join(path_timelapse,timelapse_folder)
 os.makedirs(timelapse_dat, exist_ok = True)
 # for i in range(1, 61):
 time_end = current_time + dur2_delta 
+count = 1
 while datetime.now() < time_end:
     r = picam2.capture_request()
-    r.save("main", timelapse_dat+"/test_"+datetime.now().strftime("%H-%M-%S")+'.jpg')
+    r.save("main", timelapse_dat+"/frame_"+str(count) +'.png')
     r.release()
+    count +=1
     # print(f"Captured image {i} of 50 at {time.time() - start_time:.2f}s")
 
 
