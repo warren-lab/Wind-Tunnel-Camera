@@ -71,7 +71,7 @@ time_end = current_time + dur2_delta
 count = 1
 while datetime.now() < time_end:
     r = picam2.capture_request()
-    r.save("main", timelapse_dat+"/frame_"+"{:03d}".format(count) +'.png')
+    r.save("main", timelapse_dat+"/frame_"+"{:05d}".format(count) +'.png')
     r.release()
     count +=1
     # print(f"Captured image {i} of 50 at {time.time() - start_time:.2f}s")
