@@ -58,11 +58,14 @@ print("\nWhat is the Name of the Experiment?")
 exp_name = input("enter here:")
 
 camera = Picamera2()
+# preview config
+prev_config = camera.picam2.create_preview_configuration()
+camera.configure(prev_config)
 cam_config = camera.create_still_configuration({'size': size})
 camera.configure(cam_config)
 camera.exposure_mode = 'sports'
 camera.set_controls({"LensPosition": lens_position})
-camera.start()
+camera.start(show_preview = True)
 sleep(8)
 print(datetime.now().strftime("%y%m%d_%H%M"))
 # print(print_stats())
