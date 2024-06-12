@@ -217,7 +217,7 @@ class WittyPi():
         ## get the current time
         start_time = self.get_current_time()
         ## get the time for the next day, as the experiment will start on button click initally but we want to assign every single next boot...
-        # start_time = start_time + timedelta(days=1)
+        start_time = start_time + timedelta(days=1)
         ## now for the start time need to reassign the actual hour,min,second for the experimental start
         start_time =  start_time.replace(hour=7,minute=0,second=0)
         print("StartUp Time:",start_time)

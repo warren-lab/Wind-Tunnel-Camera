@@ -34,7 +34,8 @@ os.makedirs(timelapse_dat, exist_ok = True)
 
 # initialize wittypi shutdown
 with WittyPi() as witty:
-    shutdown_dt = witty.get_shutdown_datetime() 
+    shutdown_dt = witty.get_shutdown_datetime()
+    witty.startup() # initialize the startup incase something happens...
 
 log_file = timelapse_dat + "/log.txt"
 logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
