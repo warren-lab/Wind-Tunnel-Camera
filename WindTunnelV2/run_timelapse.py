@@ -24,8 +24,10 @@ def print_stats():
 # size = (1920,1080)
 size = (4608,2592)
 # (2304,1296) # 1 fps
-lens_position = 5.3
+lens_position = 4.2
 # 4.0 # fps
+# 4.2 <- lens_position less blur...
+# 5.3 < original lens position
 
 # the path for saving the folders
 path_test = "/home/pi/swd_imgs/test/"
