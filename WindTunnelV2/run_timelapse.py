@@ -5,6 +5,9 @@ from datetime import datetime,timedelta
 from picamera2 import Picamera2
 import os
 
+from wittypi import WittyPi, ShutdownTime
+
+
 def print_stats():
     print('''
     =========================================
@@ -69,6 +72,9 @@ picam2.set_controls({"AeEnable": False, "AwbEnable": False, "FrameRate": 1})
 # And wait for those settings to take effect
 time.sleep(1)
 
+# intialize wittypi shutdown time
+with wittyPi() as witty:
+    shutdown_dt = witty.get_shutdown_datetime()
 current_time = datetime.now()
 timelapse_folder = current_time.strftime("%y%m%d_%H%M") +'_'+exp_name
 timelapse_dat = os.path.join(path_timelapse,timelapse_folder)
@@ -77,10 +83,23 @@ os.makedirs(timelapse_dat, exist_ok = True)
 time_end = current_time + dur2_delta 
 count = 1
 while datetime.now() < time_end:
-    r = picam2.capture_request()
-    r.save("main", timelapse_dat+"/frame_"+"{:05d}".format(count) +'.png')
-    r.release()
-    count +=1
+    try:
+        r = picam2.capture_request()
+        r.save("main", timelapse_dat+"/frame_"+"{:05d}".format(count) +'.png')
+        r.release()
+        count +=1
+    except KeyboardInterrupt:
+        print("Keyboard Interrupt")
+        sys.exit()
+    except ShutdownTime:
+        print("Shutdown...")
+        with WittyPi() as witty:
+            witty.shutdown()
+            witty.startup()
+        time.sleep(3)
+        sys.exit()
+    except:
+        sys.exit()
     # print(f"Captured image {i} of 50 at {time.time() - start_time:.2f}s")
 
 # picam2.stop_preview()

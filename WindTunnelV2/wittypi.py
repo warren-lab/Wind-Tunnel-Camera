@@ -2,7 +2,9 @@ from datetime import datetime,timedelta
 import time
 from smbus2 import SMBus
 
-
+class ShutdownTime(Exception):
+    """Raised when shutdown time has been reached. This time will change on next reboot"""
+    pass
 class WittyPi():
     """
     Sensor class specific to the UUGear WittyPi 3 Rev2
@@ -280,3 +282,7 @@ class WittyPi():
         Performs both a shutdown and then subsequently a startup without closing the SMBus
         """
         pass
+
+if __name__ == "__main__":
+    with WittyPi() as witty:
+        print(witty.get_current_time())
