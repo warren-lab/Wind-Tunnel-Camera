@@ -19,7 +19,7 @@ exp_name = config['experiment']['name']
 # size = (1920,1080)
 size = (4608,2592)
 # (2304,1296) # 1 fps
-lens_position = 4.2
+lens_position = 5.3
 # 4.0 # fps
 # 4.2 <- lens_position less blur...
 # 5.3 < original lens position
@@ -34,8 +34,8 @@ os.makedirs(timelapse_dat, exist_ok = True)
 
 # initialize wittypi shutdown
 with WittyPi() as witty:
-    shutdown_dt = witty.get_shutdown_datetime()
-    witty.startup() # initialize the startup incase something happens...
+    shutdown_dt = witty.shutdown_startup()
+    # witty.startup() # initialize the startup incase something happens...
 
 log_file = timelapse_dat + "/log.txt"
 logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -86,7 +86,7 @@ while True:
         with WittyPi() as witty:
             # print("Shutdown Time")
             witty.shutdown()
-            witty.startup()
+            
         sleep(3)
         sys.exit()
         

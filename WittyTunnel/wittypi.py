@@ -97,8 +97,14 @@ class WittyPi():
         sec,min,hour,days,weekday,month,year= time_list
         curr_time = datetime(year = year+2000, month = month, day=days,hour = hour,minute=min,second=sec)
         return curr_time
-    def get_shutdown_datetime(self):
+    def get_shutdown_datetime(self, hr=20, min=0, sec=0):
         """
+        hr - default hour set to 8pm
+        
+        min - default minutes set to 0
+
+        sec - default seconds set to 0
+
         get the datetime for when shutdown will occur
         sets the shutdown to occur at 8pm (TEST CASE 9:30 pm)
 
@@ -106,7 +112,7 @@ class WittyPi():
         """
         curr_time = self.get_current_time()
         # Set the shutdown time for today (will be 8pm normally but 9:30pm if testing!)
-        self._shutdown_datetime= curr_time.replace(hour=20,minute=0, second=0)# amount of time until shutdown (at least 3 minutes)
+        self._shutdown_datetime= curr_time.replace(hour=hr,minute=min, second=sec)# amount of time until shutdown (at least 3 minutes)
         print(self._shutdown_datetime)
         print(self._shutdown_datetime >= datetime.now())
         return self._shutdown_datetime
@@ -207,8 +213,15 @@ class WittyPi():
             sec,min,hour,days,weekday= shut_list
             # Python3 program for the above approach 
             print(datetime(year = shutdown_year, month = shutdown_month, day=days,hour = hour,minute=min,second=sec))
-    def startup(self):
+    def startup(self,hr=5,min=0,sec=0):
         """
+
+        hr -> default 5 (5am)
+
+        min -> default 0
+
+        sec -> default 0
+
         This method sets the startup time registers on the WittyPi 4 mini 
         
         In this case it sets the start up time to be 7am or 9:45pm 
@@ -219,7 +232,7 @@ class WittyPi():
         ## get the time for the next day, as the experiment will start on button click initally but we want to assign every single next boot...
         start_time = start_time + timedelta(days=1)
         ## now for the start time need to reassign the actual hour,min,second for the experimental start
-        start_time =  start_time.replace(hour=7,minute=0,second=0)
+        start_time =  start_time.replace(hour=hr,minute=min,second=sec)
         print("StartUp Time:",start_time)
         start_time_list =[start_time.second,start_time.minute,start_time.hour,start_time.day,self.weekday_conv(datetime.weekday(start_time))]
         year = start_time.year
@@ -246,7 +259,54 @@ class WittyPi():
             sec,min,hour,days,weekday= start_list
             # Python3 program for the above approach 
             print(datetime(day=days,hour = hour,minute=min,second=sec))
-            
+
+    def startup_curr(self,hr=5,min=0,sec=0):
+        """
+
+        hr -> default 5 (5am)
+
+        min -> default 0
+
+        sec -> default 0
+
+        This method sets the startup time registers on the WittyPi 4 mini 
+        
+        In this case it sets the start up time to be 7am or 9:45pm 
+        """
+        # SET STARTUP!
+        ## get the current time
+        start_time = self.get_current_time()
+        ## get the time for the next day, as the experiment will start on button click initally but we want to assign every single next boot...
+        # start_time = start_time + timedelta(days=1)
+        ## now for the start time need to reassign the actual hour,min,second for the experimental start
+        start_time =  start_time.replace(hour=hr,minute=min,second=sec)
+        print("StartUp Time:",start_time)
+        start_time_list =[start_time.second,start_time.minute,start_time.hour,start_time.day,self.weekday_conv(datetime.weekday(start_time))]
+        year = start_time.year
+        month = start_time.month
+        ##  # Using datetime.today()  INT
+        for count, val in enumerate(range(27,32)):
+            # print(val, shutdown_time_list[count],BCDConversion(shutdown_time_list[count]))
+            self._bus.write_byte_data(8,val,self.int_to_bcd(start_time_list[count]))
+            time.sleep(5)
+        if self.bcd_to_int(self.int_to_bcd(self._bus.read_byte_data(8,39))) == 0:
+            print("ALARM2 AKA STARTUP: NOT TRIGGERED")
+            start_list = []
+            for i in range(27,32):
+                start_list.append(self.bcd_to_int(self._bus.read_byte_data(8,i)))
+            sec,min,hour,days,weekday =  start_list
+            print(datetime(year = year+2000, month = month, day=days,hour = hour,minute=min,second=sec))
+
+        elif self.bcd_to_int(self._bus.read_byte_data(8,39)) == 1:
+            print("ALARM2 AKA STARTUP: TRIGGERED")
+            print("STARTUP Time:\n")
+            start_list = []
+            for i in range(27,32):
+                start_list.append(self.bcd_to_int(self._bus.read_byte_data(8,i)))
+            sec,min,hour,days,weekday= start_list
+            # Python3 program for the above approach 
+            print(datetime(day=days,hour = hour,minute=min,second=sec))
+
     def startup_5min(self):
         # SET STARTUP!
         start_time = self.get_current_time() + timedelta(minutes=10)
@@ -276,13 +336,75 @@ class WittyPi():
             # Python3 program for the above approach 
             print(datetime(day=days,hour = hour,minute=min,second=sec))
 
-        
+    def get_startup_time(self):
+            start_list = []
+            year = datetime.now().year
+            month=datetime.now().month
+            print(year,month)
+            for i in range(27,32):
+                start_list.append(self.bcd_to_int(self._bus.read_byte_data(8,i)))
+            sec,min,hour,days,weekday= start_list
+            # print(start_list)
+            # Python3 program for the above approach 
+            if days == 0 and min == 0 and hour == 0:
+                start_time = None
+            else:
+                start_time = datetime(year=year,month=month,day=days,hour = hour,minute=min,second=sec)
+            return start_time 
+    
     def shutdown_startup(self):
         """
         Performs both a shutdown and then subsequently a startup without closing the SMBus
         """
-        pass
+        year = datetime.now().year
+        month=datetime.now().month
+        days = datetime.now().day
+        print(f"{year}/{month}/{days}")
+        # startup should be cleared for first run
+        if self.get_startup_time() is None:
+            print("NO STARTUP")
+            ## STARTUP NOW! NO NEED TO SET
+            ## check to see if current time is less than 8am 
+            if datetime.now() < datetime(year=year,month=month,day=days,hour=8,minute=0,second=0):  
+                ## SET SHUTDOWN -> 8am
+                shutdown_dt = self.get_shutdown_datetime(hr=8,min=0,sec=0)
+                # self.shutdown()
+                ## SET NEXT STARTUP -> 5pm
+                self.startup_curr(17,0,0) # 17 0 0
+            elif datetime.now() > datetime(year=year,month=month,day=days,hour=17,minute=0,second=0) & datetime.now() < datetime(year=year,month=month,day=days,hour= 20,minute=0,second=0):
+                # If time is in range from 5pm to 8pm
+                ## SET SHUTDOWN -> 8pm
+                shutdown_dt = self.get_shutdown_datetime(hr=20,min=0,sec=0) 
+                # self.shutdown()
+                ## SET NEXT STARTUP -> 5am
+                self.startup_curr(5,0,0)
+            else:
+                # if it is inbetween... shutdown pi immediately and have it start up at 17
+                ## Shutdown now
+                dt_now = datetime.now()
+                shutdown_dt = self.get_shutdown_datetime(hr=dt_now.hour,min=dt_now.minute,sec=dt_now.second)
+                ## Startup at 17:00:00
+                self.startup_curr(17,0,0) 
+        elif self.get_startup_time() == datetime(year=year, month=month, day=days, hour=5, minute=0, second=0):
+            print("Startup at 5am")
 
+            # SET SHUTDOWN -> 8am
+            shutdown_dt = self.get_shutdown_datetime(hr=8,min=0,sec=0) # 8 0 0
+
+            # SET NEXT STARTUP -> 5pm
+            self.startup_curr(17,0,0)
+        elif self.get_startup_time() == datetime(year=year,month=month,day=days, hour = 17, minute = 0, second = 0):
+            print("Startup at 5pm")
+            # START UP AT 5PM ....
+
+            # SET SHUTDOWN to be -> 8pm
+            shutdown_dt = self.get_shutdown_datetime(hr=20,min=0,sec=0)
+
+            # SET NEXT STARTUP -> 5am (NEXT DAY)
+            self.startup(5,0,0)
+        return shutdown_dt
 if __name__ == "__main__":
     with WittyPi() as witty:
         print(witty.get_current_time())
+        print(witty.get_startup_time())
+        print(witty.shutdown_startup())
