@@ -60,7 +60,7 @@ except:
 # Give time for Aec and Awb to settle, before disabling them
 sleep(1)
 # Framerate limitation -> 1fps or less for now
-picam2.set_controls({"AeEnable": False, "AwbEnable": False, "FrameRate": 1})
+picam2.set_controls({"FrameRate": 1})
 # And wait for those settings to take effect
 sleep(1)
 

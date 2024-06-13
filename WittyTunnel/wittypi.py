@@ -378,6 +378,14 @@ class WittyPi():
                 # self.shutdown()
                 ## SET NEXT STARTUP -> 5am
                 self.startup_curr(5,0,0)
+            elif datetime.now() < datetime(year=year,month=month,day=days,hour=5,minute=0,second=0) | datetime.now() > datetime(year=year,month=month,day=days,hour= 20,minute=0,second=0):
+                # earlier than 5am or later than 8pm
+                ## shutdown immediately
+                dt_now = datetime.now()
+                shutdown_dt = self.get_shutdown_datetime(hr=dt_now.hour,min=dt_now.minute,sec=dt_now.second)
+                ## Startup at 5am
+                self.startup_curr(5,0,0) 
+
             else:
                 # if it is inbetween... shutdown pi immediately and have it start up at 17
                 ## Shutdown now
@@ -386,22 +394,40 @@ class WittyPi():
                 ## Startup at 17:00:00
                 self.startup_curr(17,0,0) 
         elif self.get_startup_time() == datetime(year=year, month=month, day=days, hour=5, minute=0, second=0):
-            print("Startup at 5am")
-
-            # SET SHUTDOWN -> 8am
-            shutdown_dt = self.get_shutdown_datetime(hr=8,min=0,sec=0) # 8 0 0
-
-            # SET NEXT STARTUP -> 5pm
-            self.startup_curr(17,0,0)
+            # Check to see if current time is later than 8am then shutdown and set startup for 5pm 
+            if datetime.now() > datetime(year=year, month=month, day=days, hour=8, minute=0, second=0):
+                # Shutdown immediately
+                dt_now = datetime.now()
+                shutdown_dt = self.get_shutdown_datetime(hr=dt_now.hour,min=dt_now.minute,sec=dt_now.second)
+                # Set Startup at 5pm
+                self.startup_curr(17,0,0) 
+            else:
+                print("Startup at 5am")
+                # SET SHUTDOWN -> 8am
+                shutdown_dt = self.get_shutdown_datetime(hr=8,min=0,sec=0) # 8 0 0
+                # SET NEXT STARTUP -> 5pm
+                self.startup_curr(17,0,0)
         elif self.get_startup_time() == datetime(year=year,month=month,day=days, hour = 17, minute = 0, second = 0):
-            print("Startup at 5pm")
-            # START UP AT 5PM ....
+            if datetime.now() < datetime(year=year,month=month,day=days, hour = 17, minute = 0, second = 0) and  datetime.now() > datetime(year=year,month=month,day=days, hour = 8, minute = 0, second = 0):
+                # if time is not in range of the 5pm - 8pm then shutdown immediately
+                dt_now = datetime.now()
+                shutdown_dt = self.get_shutdown_datetime(hr=dt_now.hour,min=dt_now.minute,sec=dt_now.second)
+                # SET STARTUP -> 5pm (ALREADY SET TO 5pm but WILL DO SO AGAIN..)
+                self.startup_curr(17,0,0)
+            elif datetime.now() > datetime(year=year,month=month,day=days, hour = 20, minute = 0, second = 0) or datetime.now() < datetime(year=year,month=month,day=days, hour = 5, minute = 0, second = 0):
+                # if time is not in range of 5pm to 8pm then shutdown immediately
+                dt_now = datetime.now()
+                shutdown_dt = self.get_shutdown_datetime(hr=dt_now.hour,min=dt_now.minute,sec=dt_now.second)
+                # SET STARTUP -> 5am 
+                self.startup_curr(5,0,0)
+            else:
+                print("Startup at 5pm")
+                # START UP AT 5PM ....
+                # SET SHUTDOWN to be -> 8pm
+                shutdown_dt = self.get_shutdown_datetime(hr=20,min=0,sec=0)
 
-            # SET SHUTDOWN to be -> 8pm
-            shutdown_dt = self.get_shutdown_datetime(hr=20,min=0,sec=0)
-
-            # SET NEXT STARTUP -> 5am (NEXT DAY)
-            self.startup(5,0,0)
+                # SET NEXT STARTUP -> 5am (NEXT DAY)
+                self.startup(5,0,0)
         return shutdown_dt
 if __name__ == "__main__":
     with WittyPi() as witty:
