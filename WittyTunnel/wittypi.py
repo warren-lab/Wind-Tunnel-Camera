@@ -368,6 +368,11 @@ class WittyPi():
             - Range between start_2 and end_2
             - Range between end_2 and start_1 (current/next day)
         """
+        start_1 = start_1.split(',')
+        end_1 = end_1.split(',')
+        start_2 = start_2.split(',')
+        end_2 = end_2.split(',')
+        # print(start_1)
         start_1 = (int(start_1[0]),int(start_1[1]),int(start_1[2]))
         end_1 = (int(end_1[0]),int(end_1[1]),int(end_1[2]))
         start_2 = (int(start_2[0]),int(start_2[1]),int(start_2[2]))
