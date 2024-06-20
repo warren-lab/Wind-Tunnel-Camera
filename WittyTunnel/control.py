@@ -51,7 +51,7 @@ try:
     picam2.configure(cam_config)
     # prev_config = picam2.create_preview_configuration()
     # picam2.configure(prev_config)
-    picam2.set_controls({"LensPosition": lens_position})
+    picam2.set_controls({"AfMode":controls.AfModeEnum.Manual,"LensPosition": lens_position})
     picam2.start()
     sleep(5)
 except:

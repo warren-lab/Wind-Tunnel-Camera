@@ -356,6 +356,10 @@ class WittyPi():
         """
         Performs both a shutdown and then subsequently a startup without closing the SMBus
         """
+        start_1 = None
+        start_2 = None
+        end_1 = None
+        end_2 = None
         year = datetime.now().year
         month=datetime.now().month
         days = datetime.now().day

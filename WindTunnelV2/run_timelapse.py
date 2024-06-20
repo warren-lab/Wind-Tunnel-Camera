@@ -6,6 +6,7 @@ import time
 from datetime import datetime,timedelta
 
 from picamera2 import Picamera2
+from libcamera import controls
 import os
 
 
@@ -25,10 +26,10 @@ def print_stats():
     =========================================
     ''')
 
-# size = (1920,1080)
+#size = (1920,1080)
 size = (4608,2592)
 # (2304,1296) # 1 fps
-lens_position = 4.2
+lens_position = 5.3
 # 4.0 # fps
 # 4.2 <- lens_position less blur...
 # 5.3 < original lens position
@@ -62,14 +63,14 @@ picam2.exposure_mode = 'sports'
 picam2.configure(cam_config)
 # prev_config = picam2.create_preview_configuration()
 # picam2.configure(prev_config)
-picam2.set_controls({"LensPosition": lens_position})
+picam2.set_controls({"AfMode":controls.AfModeEnum.Manual,"LensPosition": lens_position})
 picam2.start()
 
 # Give time for Aec and Awb to settle, before disabling them
 time.sleep(1)
 
 # Framerate limitation -> 1fps or less for now
-picam2.set_controls({"AeEnable": False, "AwbEnable": False, "FrameRate": 1})
+picam2.set_controls({ "FrameRate": 1})
 # And wait for those settings to take effect
 time.sleep(1)
 
