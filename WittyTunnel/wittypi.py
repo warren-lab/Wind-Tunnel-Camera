@@ -113,7 +113,7 @@ class WittyPi():
         curr_time = self.get_current_time()
         # Set the shutdown time for today (will be 8pm normally but 9:30pm if testing!)
         self._shutdown_datetime= curr_time.replace(hour=hr,minute=min, second=sec)# amount of time until shutdown (at least 3 minutes)
-        self._shutdown_datetime += timedelta(minutes=2) # added 2 minutes until shutdown
+        # self._shutdown_datetime += timedelta(minutes=2) # added 2 minutes until shutdown
         print(self._shutdown_datetime)
         print(self._shutdown_datetime >= datetime.now())
         return self._shutdown_datetime
