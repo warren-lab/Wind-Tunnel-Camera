@@ -16,6 +16,11 @@ import configparser
 config = configparser.ConfigParser()
 config.read("config.ini")
 exp_name = config['experiment']['name']
+start_1 = config['experiment']['startup1']
+end_1 = config['experiment']['shutdown1']
+start_2 = config['experiment']['startup2']
+end_2 = config['experiment']['shutdown2']
+
 # size = (1920,1080)
 size = (4608,2592)
 # (2304,1296) # 1 fps
@@ -34,7 +39,7 @@ os.makedirs(timelapse_dat, exist_ok = True)
 
 # initialize wittypi shutdown
 with WittyPi() as witty:
-    shutdown_dt = witty.shutdown_startup()
+    shutdown_dt = witty.shutdown_startup(start_1,end_1,start_2,end_2)
     # witty.startup() # initialize the startup incase something happens...
 
 log_file = timelapse_dat + "/log.txt"
