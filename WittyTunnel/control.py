@@ -44,7 +44,7 @@ with WittyPi() as witty:
 
 log_file = timelapse_dat + "/log.txt"
 logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
+logging.info(f"Shutdowntime {shutdown_dt}")
 logging.info("Initializting Camera....")
 # Camera Initalization
 try:
