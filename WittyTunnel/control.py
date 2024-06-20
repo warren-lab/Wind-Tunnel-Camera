@@ -89,7 +89,7 @@ while True:
 
     except ShutdownTime:
         with WittyPi() as witty:
-            # print("Shutdown Time")
+            print("Shutdown Time")
             witty.shutdown()
             
         sleep(3)
