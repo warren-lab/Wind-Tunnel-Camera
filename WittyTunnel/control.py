@@ -8,6 +8,7 @@ import sys
 import logging
 from wittypi import WittyPi, ShutdownTime
 from picamera2 import Picamera2
+from libcamera import controls
 from time import sleep
 from datetime import datetime,timedelta
 import configparser
@@ -37,14 +38,10 @@ timelapse_folder = current_time.strftime("%y%m%d_%H%M") +'_'+exp_name
 timelapse_dat = os.path.join(path_timelapse,timelapse_folder)
 os.makedirs(timelapse_dat, exist_ok = True)
 
-# initialize wittypi shutdown
-with WittyPi() as witty:
-    shutdown_dt = witty.shutdown_startup(start_1,end_1,start_2,end_2)
-    # witty.startup() # initialize the startup incase something happens...
 
 log_file = timelapse_dat + "/log.txt"
 logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logging.info(f"Shutdowntime {shutdown_dt}")
+
 logging.info("Initializting Camera....")
 # Camera Initalization
 try:
@@ -62,6 +59,13 @@ try:
 except:
     logging.error("Camera initialization failed")
     sys.exit()
+
+# initialize wittypi shutdown
+with WittyPi() as witty:
+    shutdown_dt = witty.shutdown_startup(start_1,end_1,start_2,end_2)
+    # witty.startup() # initialize the startup incase something happens...
+
+logging.info(f"Shutdowntime {shutdown_dt}")
 # Give time for Aec and Awb to settle, before disabling them
 sleep(1)
 # Framerate limitation -> 1fps or less for now
