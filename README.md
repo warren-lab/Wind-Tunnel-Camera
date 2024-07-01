@@ -34,11 +34,12 @@ TO RESET/STOP STARTUP/SHUTDOWN TIMES:
 cd wittypi/
 ls
 ./wittyPi.sh
-Option 12 (Reset data)
-Option 1 (clear scheduled startup time)
-Option 12 (Reset data)
-Option 2 (clear scheduled shutdown time)
-Option 13 (Exit)
+-Option 12 (Reset data)
+-Option 1 (clear scheduled startup time)
+-Option 12 (Reset data)
+-Option 2 (clear scheduled shutdown time)
+-Option 13 (Exit)
+
 (next to options 4 and 5 should be clear, no times, means it will not startup at scheduled times or instantly shutdown)
 
 TO SET UP STARTUP/SHUTDOWN SCHEDULER:
