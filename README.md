@@ -18,11 +18,11 @@ INITIAL SET UP IN MONITOR:
 - Wait for white flashing light, then press fully black button. the pi is on when the green and red lights are on
   
 - If the display does not work, press the black button to restart, if not, then unplug and plug the battery
-
+***
 Otherwise connect through SSH 
 To ssh into pi: 
 
-Plug ethernet cbale into pi
+Plug ethernet cable into pi
 
 From command line in lab computer:
 ssh -vvv pi@10.42.0.123
@@ -30,6 +30,8 @@ ssh -vvv pi@10.42.0.123
 (wait a minute before running commands for internal processes to fully run)
 
 enter flyranch password
+
+***
 
 On the display:
 
