@@ -31,19 +31,29 @@ ssh -vvv pi@10.42.0.123
 
 enter flyranch password
 
-on the display:
+On the display:
 
 open the terminal top bar
-- check the status of the system: sudo systemctl status windtunnel.service
-- 
+- check the status of the system:
+```
+sudo systemctl status windtunnel.service
+```
 Ctrl +C to exit
-- then stop it by: sudo systemctl stop windtunnel.service
+
+then stop it by: 
+```
+sudo systemctl stop windtunnel.service
+```
 
 TO RESET/STOP STARTUP/SHUTDOWN TIMES: 
 
+```
 cd wittypi/
+```
 ls
+```
 ./wittyPi.sh
+```
 
 -Option 12 (Reset data)
 
@@ -63,15 +73,20 @@ Go up one directory
 ```
 cd ../Wind-Tunnel-Camera/WittyTunnel/
 ```
-
+```
 sudo nano config.ini
+```
 
 Type experiment name -> ctrl + x 
+
 Change startup and shutdown time if necessary (HH,mm,ss)
+
 Save modified buffer? Y + enter
 
 TO SHUTDOWN PI
+```
 sudo shutdown -h now
+```
 
 Press black button again to reboot (when connected to the battery), it will start recording at the scheduled times. 
 
