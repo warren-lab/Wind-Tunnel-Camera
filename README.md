@@ -91,14 +91,18 @@ sudo shutdown -h now
 Press black button again to reboot (when connected to the battery), it will start recording at the scheduled times. 
 
 TO CHECK STATUS:
-
-Check status: sudo systemctl status windtunnel.service
-
+```
+sudo systemctl status windtunnel.service
+```
 Check startup and shutdown times (only once camera has been initialized according to status above):
 
+```
 cd wittypi/
+```
 ls
+```
 ./wittyPi.sh
+```
 
 Look at times in options 4 and 5. Next shutdown (4) should be in a few minutes, but next startup (5) should be at the closest scheduled time
 press 13 to exit
@@ -110,15 +114,22 @@ To calibrate system time:
 Option 3 (synchronize with network time)
 
 To change recording times
+
 in wittypi.py
+
 in def shutdown_startup
+
 within the function you can change startup and end times for each interval
 
 ***** 	
 TO RUN INSTANT TIMELAPSE:
 
+```
 cd Wind-Tunnel-Camera/WindTunnelV2
+```
+```
 ./run_timelapse.py
+```
 
 
 
