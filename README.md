@@ -6,26 +6,36 @@ Latest: WittyTunnel
 ****
 
 SET SPECIFICALLY FOR SWD TRACKING PROJECT
+
 For recording at specific time intervals using Pi camera with Witty Pi
 
 INITIAL SET UP IN MONITOR:
 
 - Connect mouse, keyboard, hdmi connector
-- Connect battery to the Witty Pi (not the base pi!). Check battery power. 
+  
+- Connect battery to the Witty Pi (not the base pi!). Check battery power.
+  
 - Wait for white flashing light, then press fully black button. the pi is on when the green and red lights are on
+  
 - If the display does not work, press the black button to restart, if not, then unplug and plug the battery
 
 Otherwise connect through SSH 
 To ssh into pi: 
+
 Plug ethernet cbale into pi
+
 From command line in lab computer:
 ssh -vvv pi@10.42.0.123
+
 (wait a minute before running commands for internal processes to fully run)
+
 enter flyranch password
 
 on the display:
+
 open the terminal top bar
 - check the status of the system: sudo systemctl status windtunnel.service
+- 
 Ctrl +C to exit
 - then stop it by: sudo systemctl stop windtunnel.service
 
