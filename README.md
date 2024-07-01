@@ -60,7 +60,10 @@ ls
 TO SET UP STARTUP/SHUTDOWN SCHEDULER:
 
 Go up one directory
+```
 cd ../Wind-Tunnel-Camera/WittyTunnel/
+```
+
 sudo nano config.ini
 
 Type experiment name -> ctrl + x 
